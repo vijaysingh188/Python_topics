@@ -1,0 +1,91 @@
+ 
+########create 3 table 
+CREATE TABLE COUSTOMERS {
+    coustomer_id int primary_key,
+    coustomer_name varchar(255),
+}
+
+
+CREATE TABLE PRODUCTS{
+    product_id int primary_key,
+    product_name name varchar(255),
+    product_price decimal(10,2),
+
+}
+CREATE TABLE ORDERS {
+    orders_id int primary_key,
+    orders_date date,
+    coustomer_id int,
+    product_id int, 
+    foreignkey (coustomer_id) refereneces
+    COUSTOMERS(coustomer_id),
+    foreignkey (product_id) refereneces
+    PRODUCTS(product_id),
+}
+
+############Join 3 table using inner join
+SELECT ORDERS.orders_date,ORDERS.orders_id,
+       COUSTOMERS.coustomer_name,
+       PRODUCTS.product_name,PRODUCTS.product_price
+FROM ORDERS 
+INNER JOIN 
+    COUSTOMERS ON ORDERS.coustomer_id = COUSTOMERS.coustomer_id
+INNER JOIN 
+    PRODUCTS ON ORDERS.product_id = PRODUCTS.product_id
+
+
+##########Update the TABLE
+UPDATE EMP_TABLE 
+SET SALARY = 60000
+WHERE EMP_ID = 2
+
+########iNSERT THE ONE ROW
+INSERT EMP_TABLE ON ('EMP_ID','EMP_NAME')
+    VALUES ('10','VJ')
+
+
+########iNSERT THE MULTIPLE ROW
+INSERT EMP_TABLE ON ('EMP_ID','EMP_NAME')
+    VALUES ('10','VJ'),('11','AJ')
+
+
+
+######find max value of product_price using all three TABLE
+SELECT MAX(product_price) 
+    FROM ORDERS
+INNER JOIN 
+    COUSTOMERS ON ORDERS.coustomer_id = COUSTOMERS.coustomer_id
+INNER JOIN 
+    PRODUCTS ON ORDERS.product_id = PRODUCTS.product_id
+
+
+
+######find max value of product_price using all three TABLE on base of date
+SELECT MAX(product_price) 
+    FROM ORDERS
+INNER JOIN 
+    COUSTOMERS ON ORDERS.coustomer_id = COUSTOMERS.coustomer_id
+INNER JOIN 
+    PRODUCTS ON ORDERS.product_id = PRODUCTS.product_id
+WHERE
+    ORDERS.orders_date BETWEEN '2023-01-01' AND '2023-02-01'
+
+
+
+########Delete multiple Row
+DELETE FROM ORDERS WHERE orders_date <= '2023-01-10'
+
+
+
+########Delete using join
+DELETE orders_date,coustomer_id,coustomer_name
+FROM ORDERS
+    INNER JOIN COUSTOMERS ON 
+    ORDERS.coustomer_id = COUSTOMERS.coustomer_id
+WHERE COUSTOMERS.coustomer_id = 10
+
+
+
+########find 3 heightiest
+ SELECT NAME,EMP_SALARY FROM TABLE_NAME ORDER BY SALARY 
+    DESC LIMIT 1 OFFSET 2

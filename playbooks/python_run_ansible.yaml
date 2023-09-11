@@ -1,0 +1,20 @@
+<!-- pip install ansible-runner -->
+
+--- 
+   - name: My playbook
+     hosts:  target_hosts
+     tasks: 
+         - name: Apache is installed
+           package: 
+               name: apache2
+               state: present
+
+from ansible_runner AnsibleRunner
+runner = AnsibleRunner(playbook='myplaybook.yml',private_data_dir='')
+
+status,rc = runner.run()
+
+if status == "successful":
+   print("playbook runned successfully")
+else:
+   print(f"{rc} exection failed")

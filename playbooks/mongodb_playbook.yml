@@ -1,0 +1,54 @@
+---
+- name: Execute MongoDB Query
+  hosts: localhost
+  tasks:
+    - name: Run MongoDB Query
+      community.mongodb.mongodb_query:
+        database: your_database_name
+        collection: your_collection_name
+        query: '{"field_name": "field_value"}'
+      register: mongo_query_result
+
+    - name: Display MongoDB Query Result
+      debug:
+        var: mongo_query_result.stdout_lines
+
+        
+- name: Perform MongoDB Update Query
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Run MongoDB Update Query
+      community.mongodb.mongodb_query:
+        database: your_database_name
+        collection: your_collection_name
+        query: '{"age": 25}'  # Specify the query to match documents to be updated
+        update:
+          method: update
+          query: '{"$set": {"status": "active"}}'  # Specify the update operation
+      register: mongodb_result
+
+    - name: Display MongoDB Update Result
+      debug:
+        var: mongodb_result
+
+---
+- name: Perform MongoDB Delete Query
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Run MongoDB Delete Query
+      community.mongodb.mongodb_query:
+        database: your_database_name
+        collection: your_collection_name
+        query: '{"age": 25}'  # Specify the query to match documents for deletion
+        delete:
+          method: delete
+      register: mongodb_result
+
+    - name: Display MongoDB Delete Result
+      debug:
+        var: mongodb_result
+
+
+# ansible-playbook your_playbook.yml

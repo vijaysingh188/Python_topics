@@ -1,0 +1,46 @@
+show dbs
+
+use DatabaseName
+
+db.Ecommerce.insert({"Products":"Jeans"})
+
+df.Ecommerce.find()
+
+db.Ecommerce.insert([{"Products":"Jeans"},{"Products":"Shirts"}])
+
+db.Ecommerce.updateOne({"Products":"Jeans"},{ $set:{"Size":"XL"}})
+
+db.Ecommerce.updateMany({"Products":"Jeans"},{ $set:{"Size":"XL"}})
+
+
+db.Ecommerce.updateMany({"Products":{ $in : ["Jeans","Shirts"]}},{ $set:{"Size":"L"}})
+
+
+
+db.Ecommerce.findOneAndUpdate({"Prize":{ $gt:5000}},{$set:{"Prize":7000}})
+
+db.Ecommerce.findOneAndDelete({"Products":"Shoes"})
+{ _id: 'aaaaa', Products: 'Shoes', Size: '32' }
+
+
+db.Ecommerce.findOneAndUpdate({"Products":{$in:["Shirts","Jeans"]}},{ $set:{"Prize":"5000"}})
+
+
+db.Ecommerce.createIndex({"Prize":-1})
+
+db.Ecommerce.find().explain("executionStats")
+
+db.Ecommerce.getIndexes()
+
+db.Ecommerce.insertMany([
+  { "_id": 1, "product": "A", "quantity": 5, "price": 10 },
+  { "_id": 2, "product": "B", "quantity": 3, "price": 15 },
+  { "_id": 3, "product": "A", "quantity": 2, "price": 12 },
+  { "_id": 4, "product": "C", "quantity": 7, "price": 8 },
+])
+
+
+db.Sales.aggregate({$group:{
+     _id:"$product",
+     totalsales:{ $sum:{ $multiply:["$quantity","$price"]}} 
+     }})

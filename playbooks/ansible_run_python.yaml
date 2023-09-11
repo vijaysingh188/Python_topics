@@ -1,0 +1,13 @@
+---
+- name: Run Python Script with the shell module
+  hosts: your_target_hosts
+  tasks:
+    - name: Activate Virtual Environment
+      shell: source /path/to/your/virtualenv/bin/activate
+      become: yes
+
+    - name: Run Python Script
+      shell: python /path/to/your_script.py
+      become: yes
+
+

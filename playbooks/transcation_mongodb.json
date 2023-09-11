@@ -1,0 +1,16 @@
+const session = client.startSession();
+
+try {
+  session.startTransaction();
+
+  await collection1.updateOne({ _id: 1 }, { $set: { field1: "updatedValue" } });
+  await collection2.insertOne({ _id: 2, field2: "newValue" });
+
+  await session.commitTransaction();
+} catch (error) {
+
+  await session.abortTransaction();
+} finally {
+     
+  session.endSession();
+}
